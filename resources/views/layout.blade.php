@@ -21,14 +21,14 @@
 
     
 
-        <div class="jumbotron">
+       
             <h1>
                 @yield('cabecalho')
             </h1>
 
             @yield('conteudo')
 
-        </div>
+
     </div>
 
 </body>

@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('cabecalho', 'Listagem de Reservas')
+
 
 @section('conteudo')
 
@@ -28,84 +28,75 @@
 
 </div>
 
+<table class="table table-dark" id="table-reservas">
 
-<style>
-    table {
-        width: 100% !Important;
-    }
-</style>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nome da Atividade</th>
+            <th>Solicitante</th>
+            <th>E-mail</th>
+            <th>Departamento</th>
+            <th>Descrição</th>
+            <th>Obs</th>
+            <th>Status</th>
+            <th>Usuário</th>
+            <th>Unidade</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
 
+    <tbody>
 
-<div>
-    <table class="table table-dark" id="table-reservas">
-
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nome da Atividade</th>
-                <th>Solicitante</th>
-                <th>E-mail</th>
-                <th>Departamento</th>
-                <th>Descrição</th>
-                <th>Obs</th>
-                <th>Status</th>
-                <th>Usuário</th>
-                <th>Unidade</th>
-                <td></td>
-            </tr>
-        </thead>
-
-        <tbody>
-
-            @foreach ($reservas as $reserva)
-            <tr>
-                <td>{{ $reserva->id_reserva }}</td>
-                <td>{{ $reserva->nome_atividade }}</td>
-                <td>{{ $reserva->nome_solicitante }}</td>
-                <td>{{ $reserva->email }}</td>
-                <td>{{ $reserva->departamento }}</td>
-                <td>{{ $reserva->descricao_atividade }}</td>
-                <td>{{ $reserva->obs }}</td>
-                <td>{{ $reserva->status }}</td>
-                <td>{{ $reserva->name }}</td>
-                <td>{{ $reserva->nome_unidade }}</td>
+        @foreach ($reservas as $reserva)
+        <tr>
+            <td>{{ $reserva->id_reserva }}</td>
+            <td>{{ $reserva->nome_atividade }}</td>
+            <td>{{ $reserva->nome_solicitante }}</td>
+            <td>{{ $reserva->email }}</td>
+            <td>{{ $reserva->departamento }}</td>
+            <td>{{ $reserva->descricao_atividade }}</td>
+            <td>{{ $reserva->obs }}</td>
+            <td>{{ $reserva->status }}</td>
+            <td>{{ $reserva->name }}</td>
+            <td>{{ $reserva->nome_unidade }}</td>
 
 
 
-                <td>
-                    <div class="d-flex justify-content-center">
+            <td>
+                <div class="d-flex justify-content-center">
 
 
-                        <a href="#" class="btn btn-primary btn-sm mr-1">
-                            <i class="fas fa-eye"></i>
-                        </a>
-
-
-
-                        <a href="{{ route('form_editar_reserva', $reserva->id_reserva)}}" class="btn btn-success btn-sm mr-1">
-                            <i class="fas fa-pencil-alt"></i>
-                        </a>
+                    <a href="#" class="btn btn-primary btn-sm mr-1">
+                        <i class="fas fa-eye"></i>
+                    </a>
 
 
 
-                        <form action="#" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir o reserva ?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </form>
-
-                    </div>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-
-    </table>
-</div>
+                    <a href="{{ route('form_editar_reserva', $reserva->id_reserva)}}" class="btn btn-success btn-sm mr-1">
+                        <i class="fas fa-pencil-alt"></i>
+                    </a>
 
 
+
+                    <form action="#" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir o reserva ?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </form>
+
+                </div>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+
+</table>
+
+
+<div id='calendar'></div>
 <script>
     var reservas = [];
 
@@ -170,7 +161,7 @@
 
             $(".fc-prev-button").click(function() {
 
- 
+
                 if (parseInt(mes) - 1 < 10) {
                     mes_final = '01';
                 } else {
@@ -256,11 +247,11 @@
             editable: true,
             selectable: true,
             events: reservas,
-            eventClick: function(event, element) {
+            eventClick: function(info) {
 
-                $('#calendar').fullCalendar('updateEvent', event);
+                alert('Event: ' + info.event.id);
+            },
 
-            }
 
         });
 
@@ -269,11 +260,6 @@
 </script>
 
 
-<div id='calendar'></div>
 
-
-<script>
-
-</script>
 
 @endsection
